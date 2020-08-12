@@ -1,7 +1,7 @@
 import request from 'superagent'
 import { Carrier, DHL_URL } from './constants'
 
-export const fetchFromDHL = (trackingNum: number) => {
+export const fetchFromDHL = (trackingNum: string) => {
   return request
     .get(DHL_URL)
     .query({ AWB: trackingNum })
@@ -13,7 +13,7 @@ export const fetchFromDHL = (trackingNum: number) => {
 }
 
 
-export const fetchFromFedex = (trackingNum: number) => {
+export const fetchFromFedex = (trackingNum: string) => {
   const data = {
     TrackPackagesRequest: {
       trackingInfoList: [{
@@ -33,7 +33,7 @@ export const fetchFromFedex = (trackingNum: number) => {
     .then(res => JSON.parse(res.text))
 }
 
-export const fetchFromUPS = (trackingNum: number) => {
+export const fetchFromUPS = (trackingNum: string) => {
   return request
     .post(DHL_URL)
     .set({
