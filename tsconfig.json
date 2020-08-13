@@ -18,6 +18,11 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "downlevelIteration": true,
+    "baseUrl": ".",
+    "paths": {
+      "@lib/*": ["./lib/*"],
+      "@pages/*": ["./pages/*"]
+    }
   },
   "include": [
     "next-env.d.ts",
