@@ -73,5 +73,11 @@ export function fetchFrom(carrier: Carrier, trackingNum: string) {
       return fetchFromFedex(trackingNum)
     case "ups":
       return fetchFromUPS(trackingNum)
+    default:
+      return [{
+        location: "Unknown",
+        status: "Invalid",
+        time: "-----"
+      }] as ShipHistory[]
   }
 }
