@@ -65,6 +65,25 @@ function fetchFromUPS(trackingNum: string): Promise<ShipHistory[]> {
     } as ShipHistory)))
 }
 
+export function getIconFromStatus(status: string) {
+  const s = status.toLowerCase()
+  if (s.includes("delivered")) {
+    return "ReminderPerson"
+  } else if (s.includes("vehicle")|| s.includes("out for")) {
+    return "DeliveryTruck"
+  } else if (s.includes("transit")) {
+    return "Airplane"
+  } else if (s.includes("Scan")) {
+    return "GenericScan"
+  } else if (s.includes("picked")) {
+    return "Manufacturing"
+  } else if (s.includes("arrive")) {
+    return "Arrivals"
+  } else {
+    return "POI"
+  }
+}
+
 export function fetchFrom(carrier: Carrier, trackingNum: string) {
   switch (carrier) {
     case "dhl":

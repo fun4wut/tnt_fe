@@ -1,9 +1,10 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
-import { fetchFrom } from '@lib/utils'
+import { fetchFrom, getIconFromStatus } from '@lib/utils'
 import { ShipHistory } from '@lib/types'
 import { Carrier } from '@lib/constants'
-import * as styles from '@styles/track'
+import { mergeStyleSets, ActivityItem, Text, FontIcon } from '@fluentui/react'
+import moment from 'moment'
 
 type Props = {
   histories: Array<ShipHistory>
@@ -11,6 +12,26 @@ type Props = {
   trackingNum: string
 }
 
+const styles = mergeStyleSets({
+  root: {
+    // backgroundColor: "gray"
+  },
+  divideLine: {
+    height: 0.5,
+    marginTop: 5,
+    backgroundColor: "teal"
+  },
+  basicBlock: {
+
+  },
+  icons: {
+    fontSize: 20,
+    height: 20,
+    width: 20,
+    marginRight: 5,
+    marginTop: 5,
+  }
+})
 
 const ShipmentLocation = ({ histories }: Props) => {
   const router = useRouter()
@@ -19,16 +40,22 @@ const ShipmentLocation = ({ histories }: Props) => {
   }
 
   const singleEvent = (evt: ShipHistory) => (
-    <div style={styles.basicBlock} key={evt.location}>
-      <div>{evt.location}</div>
-      <div>{evt.status}</div>
-      <div>{evt.time}</div>
-      <div style={styles.dividLine}></div>
-    </div>
+    <ActivityItem
+      key={evt.location}
+      activityDescription = {<Text>{evt.location}</Text>}
+      comments={<Text>{evt.status}</Text>}
+      activityIcon={<FontIcon iconName={getIconFromStatus(evt.status)} className={styles.icons} />}
+      timeStamp={moment(evt.time).fromNow()}
+      styles={{
+        root: {
+          margin: 10
+        }
+      }}
+    />
   )
 
   return (
-    <div style={styles.root}>
+    <div className={styles.root}>
       {histories.map(singleEvent)}
     </div>
   )
