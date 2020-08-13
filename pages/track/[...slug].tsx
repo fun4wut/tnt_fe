@@ -3,8 +3,9 @@ import { useRouter } from 'next/router'
 import { fetchFrom, getIconFromStatus } from '@lib/utils'
 import { ShipHistory } from '@lib/types'
 import { Carrier } from '@lib/constants'
-import { mergeStyleSets, ActivityItem, Text, FontIcon } from '@fluentui/react'
+import { mergeStyleSets, ActivityItem, Text, FontIcon, Label, Spinner, SpinnerSize, ShimmerElementsGroup, ShimmerElementType, Shimmer, AutoScroll } from '@fluentui/react'
 import moment from 'moment'
+import { useRef, useEffect } from 'react'
 
 type Props = {
   histories: Array<ShipHistory>
@@ -36,8 +37,18 @@ const styles = mergeStyleSets({
 const ShipmentLocation = ({ histories }: Props) => {
   const router = useRouter()
   if (router.isFallback) {
-    return <div>Loading...</div>
+    return (
+        <Text>Loading...</Text>
+    )
   }
+
+  const rootRef = useRef<HTMLDivElement>()
+  useEffect(() => {
+    const scroll = new AutoScroll(rootRef.current)
+    return () => {
+      scroll.dispose()
+    }
+  }, [])
 
   const singleEvent = (evt: ShipHistory) => (
     <ActivityItem
@@ -55,7 +66,7 @@ const ShipmentLocation = ({ histories }: Props) => {
   )
 
   return (
-    <div className={styles.root}>
+    <div className={styles.root} ref={rootRef}>
       {histories.map(singleEvent)}
     </div>
   )
