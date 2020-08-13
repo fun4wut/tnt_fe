@@ -28,7 +28,7 @@ const ShipmentLocation = ({ histories }: Props) => {
   )
 
   return (
-    <div>
+    <div style={styles.root}>
       {histories.map(singleEvent)}
     </div>
   )
