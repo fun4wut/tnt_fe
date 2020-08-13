@@ -1,9 +1,6 @@
-export enum ShipStatus {
-    Delivered, Shipped
-}
 
 export type ShipHistory = {
-    status: ShipStatus
+    status: string
     time: string
     location: string
 }

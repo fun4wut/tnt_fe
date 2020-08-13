@@ -1,10 +1,14 @@
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
-import { fetchFromDHL, fetchFromFedex, fetchFromUPS } from '@lib/utils'
-import { ShipHistory, ShipStatus } from '@lib/types'
+import { fetchFrom } from '@lib/utils'
+import { ShipHistory } from '@lib/types'
+import { Carrier } from '@lib/constants'
+import * as styles from '@styles/track'
 
 type Props = {
   histories: Array<ShipHistory>
+  carrier: Carrier
+  trackingNum: string
 }
 
 
@@ -14,9 +18,18 @@ const ShipmentLocation = ({ histories }: Props) => {
     return <div>Loading...</div>
   }
 
+  const singleEvent = (evt: ShipHistory) => (
+    <div style={styles.basicBlock}>
+      <div>{evt.location}</div>
+      <div>{evt.status}</div>
+      <div>{evt.time}</div>
+      <div style={styles.dividLine}></div>
+    </div>
+  )
+
   return (
     <div>
-
+      {histories.map(singleEvent)}
     </div>
   )
 
@@ -34,7 +47,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   return {
     props: {
-      histories: []
+      histories: await fetchFrom(carrier as Carrier, trackingNum)
     } as Props,
     revalidate: 1
   }

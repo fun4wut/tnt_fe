@@ -1,7 +1,9 @@
 import request from 'superagent'
 import { Carrier, DHL_URL } from './constants'
+import { ShipHistory } from './types'
+import moment from 'moment'
 
-export const fetchFromDHL = (trackingNum: string) => {
+function fetchFromDHL(trackingNum: string): Promise<ShipHistory[]> {
   return request
     .get(DHL_URL)
     .query({ AWB: trackingNum })
@@ -9,11 +11,16 @@ export const fetchFromDHL = (trackingNum: string) => {
       Accept: "*/*",
       Connection: "keep-alive"
     })
-    .then(res => JSON.parse(res.text))
+    .then(res => JSON.parse(res.text).results[0].checkpoints)
+    .then(list => list.map(evt => ({
+      location: evt.location,
+      status: evt.description,
+      time: moment(`${evt.date} ${evt.time}`, "LLLL").toLocaleString()
+    } as ShipHistory)))
 }
 
 
-export const fetchFromFedex = (trackingNum: string) => {
+function fetchFromFedex(trackingNum: string): Promise<ShipHistory[]> {
   const data = {
     TrackPackagesRequest: {
       trackingInfoList: [{
@@ -30,10 +37,15 @@ export const fetchFromFedex = (trackingNum: string) => {
       data: JSON.stringify(data),
       action: "trackpackages"
     })
-    .then(res => JSON.parse(res.text))
+    .then(res => JSON.parse(res.text).TrackPackagesResponse.packageList[0].scanEventList)
+    .then(list => list.map(evt => ({
+      status: evt.status,
+      time: moment(`${evt.date} ${evt.time}`, "YYYY-MM-DD hh:mm:ss").toLocaleString(),
+      location: evt.scanLocation
+    } as ShipHistory)))
 }
 
-export const fetchFromUPS = (trackingNum: string) => {
+function fetchFromUPS(trackingNum: string): Promise<ShipHistory[]> {
   return request
     .post(DHL_URL)
     .set({
@@ -45,5 +57,21 @@ export const fetchFromUPS = (trackingNum: string) => {
       Locale: "en_US",
       TrackingNumber: [trackingNum]
     })
-    .then(res => JSON.parse(res.text))
+    .then(res => JSON.parse(res.text).trackDetails[0].shipmentProgressActivities)
+    .then(list => list.map(evt => ({
+      status: evt.activityScan,
+      location: evt.location,
+      time: moment(`${evt.date} ${evt.time}`, "DD/MM/YYYY LT").toLocaleString()
+    } as ShipHistory)))
+}
+
+export function fetchFrom(carrier: Carrier, trackingNum: string) {
+  switch (carrier) {
+    case "dhl":
+      return fetchFromDHL(trackingNum)
+    case "fedex":
+      return fetchFromFedex(trackingNum)
+    case "ups":
+      return fetchFromUPS(trackingNum)
+  }
 }
