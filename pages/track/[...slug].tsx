@@ -19,7 +19,7 @@ const ShipmentLocation = ({ histories }: Props) => {
   }
 
   const singleEvent = (evt: ShipHistory) => (
-    <div style={styles.basicBlock}>
+    <div style={styles.basicBlock} key={evt.location}>
       <div>{evt.location}</div>
       <div>{evt.status}</div>
       <div>{evt.time}</div>

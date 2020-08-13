@@ -1,5 +1,5 @@
 import request from 'superagent'
-import { Carrier, DHL_URL } from './constants'
+import { Carrier, DHL_URL, FEDEX_URL, UPS_URL } from './constants'
 import { ShipHistory } from './types'
 import moment from 'moment'
 
@@ -31,7 +31,7 @@ function fetchFromFedex(trackingNum: string): Promise<ShipHistory[]> {
     }
   }
   return request
-    .post("https://www.fedex.com/trackingCal/track")
+    .post(FEDEX_URL)
     .type("form")
     .send({
       data: JSON.stringify(data),
@@ -47,7 +47,7 @@ function fetchFromFedex(trackingNum: string): Promise<ShipHistory[]> {
 
 function fetchFromUPS(trackingNum: string): Promise<ShipHistory[]> {
   return request
-    .post(DHL_URL)
+    .post(UPS_URL)
     .set({
       Accept: "*/*",
       Connection: "keep-alive",
