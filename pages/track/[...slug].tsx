@@ -77,33 +77,33 @@ const ShipmentLocation = ({ histories }: Props) => {
 
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: true
-  }
-}
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { slug: [carrier, trackingNum] } = params
-
-  return {
-    props: {
-      histories: await fetchFrom(carrier as Carrier, trackingNum)
-    } as Props,
-    revalidate: 1
-  }
-}
-
-// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-//   const { slug: [carrier, trackingNum] } = params
-//   const histories = await fetchFrom(carrier as Carrier, trackingNum)
+// export const getStaticPaths: GetStaticPaths = async () => {
 //   return {
-//     props: {
-//       histories
-//     }
+//     paths: [],
+//     fallback: true
 //   }
 // }
+
+// export const getStaticProps: GetStaticProps = async ({ params }) => {
+//   const { slug: [carrier, trackingNum] } = params
+
+//   return {
+//     props: {
+//       histories: await fetchFrom(carrier as Carrier, trackingNum)
+//     } as Props,
+//     revalidate: 1
+//   }
+// }
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const { slug: [carrier, trackingNum] } = params
+  const histories = await fetchFrom(carrier as Carrier, trackingNum)
+  return {
+    props: {
+      histories
+    }
+  }
+}
 
 export default ShipmentLocation
 
