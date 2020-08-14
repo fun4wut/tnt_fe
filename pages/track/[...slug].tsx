@@ -93,11 +93,11 @@ const ShipmentLocation = ({ histories }: Props) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { slug: [carrier, trackingNum] } = params
-
+  const histories = await fetchFrom(carrier as Carrier, trackingNum)
   return {
     props: {
-      histories: await fetchFrom(carrier as Carrier, trackingNum)
-    } as Props,
+      histories
+    }
   }
 }
 
