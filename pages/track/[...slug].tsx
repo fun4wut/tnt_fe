@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { fetchFrom, getIconFromStatus } from '@lib/utils'
 import { ShipHistory } from '@lib/types'
 import { Carrier } from '@lib/constants'
-import { ActivityItem, Text, FontIcon, Label, Spinner, SpinnerSize, ShimmerElementsGroup, ShimmerElementType, Shimmer, AutoScroll } from '@fluentui/react'
+import { ActivityItem, Text, FontIcon, Label, Spinner, SpinnerSize, ShimmerElementsGroup, ShimmerElementType, Shimmer, AutoScroll, getIcon } from '@fluentui/react'
 import moment from 'moment'
 import { useRef, useEffect, CSSProperties } from 'react'
 
@@ -55,7 +55,7 @@ const ShipmentLocation = ({ histories }: Props) => {
       key={evt.location}
       activityDescription = {<Text>{evt.location}</Text>}
       comments={<Text>{evt.status}</Text>}
-      activityIcon={<FontIcon iconName={getIconFromStatus(evt.status)} style={styles.icons} />}
+      activityIcon={<i className={`ms-Icon ms-Icon--${getIconFromStatus(evt.status)}`} style={styles.icons} />}
       timeStamp={moment(evt.time).fromNow()}
       styles={{
         root: {

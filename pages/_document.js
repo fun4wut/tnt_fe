@@ -21,6 +21,10 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
+        <link
+          rel="stylesheet"
+          href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css"
+        />
           <style type="text/css" dangerouslySetInnerHTML={{__html: this.props.styleTags}} />
         </Head>
         <body>
