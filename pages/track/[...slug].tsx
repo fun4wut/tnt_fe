@@ -3,9 +3,9 @@ import { useRouter } from 'next/router'
 import { fetchFrom, getIconFromStatus } from '@lib/utils'
 import { ShipHistory } from '@lib/types'
 import { Carrier } from '@lib/constants'
-import { mergeStyleSets, ActivityItem, Text, FontIcon, Label, Spinner, SpinnerSize, ShimmerElementsGroup, ShimmerElementType, Shimmer, AutoScroll } from '@fluentui/react'
+import { ActivityItem, Text, FontIcon, Label, Spinner, SpinnerSize, ShimmerElementsGroup, ShimmerElementType, Shimmer, AutoScroll } from '@fluentui/react'
 import moment from 'moment'
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, CSSProperties } from 'react'
 import { initializeIcons } from '@uifabric/icons'
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
   trackingNum: string
 }
 
-const styles = mergeStyleSets({
+const styles: Record<string, CSSProperties> = ({
   root: {
     backgroundColor: "#edebe9"
   },
@@ -57,7 +57,7 @@ const ShipmentLocation = ({ histories }: Props) => {
       key={evt.location}
       activityDescription = {<Text>{evt.location}</Text>}
       comments={<Text>{evt.status}</Text>}
-      activityIcon={<FontIcon iconName={getIconFromStatus(evt.status)} className={styles.icons} />}
+      activityIcon={<FontIcon iconName={getIconFromStatus(evt.status)} style={styles.icons} />}
       timeStamp={moment(evt.time).fromNow()}
       styles={{
         root: {
@@ -68,40 +68,40 @@ const ShipmentLocation = ({ histories }: Props) => {
   )
 
   return (
-    <div className={styles.root} ref={rootRef}>
+    <div style={styles.root} ref={rootRef}>
       {histories.map(singleEvent)}
     </div>
   )
 
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: true
-  }
-}
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { slug: [carrier, trackingNum] } = params
-
-  return {
-    props: {
-      histories: await fetchFrom(carrier as Carrier, trackingNum)
-    } as Props,
-    revalidate: 1
-  }
-}
-
-// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-//   const { slug: [carrier, trackingNum] } = params
-//   const histories = await fetchFrom(carrier as Carrier, trackingNum)
+// export const getStaticPaths: GetStaticPaths = async () => {
 //   return {
-//     props: {
-//       histories
-//     }
+//     paths: [],
+//     fallback: true
 //   }
 // }
+
+// export const getStaticProps: GetStaticProps = async ({ params }) => {
+//   const { slug: [carrier, trackingNum] } = params
+
+//   return {
+//     props: {
+//       histories: await fetchFrom(carrier as Carrier, trackingNum)
+//     } as Props,
+//     revalidate: 1
+//   }
+// }
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const { slug: [carrier, trackingNum] } = params
+  const histories = await fetchFrom(carrier as Carrier, trackingNum)
+  return {
+    props: {
+      histories
+    }
+  }
+}
 
 export default ShipmentLocation
 
