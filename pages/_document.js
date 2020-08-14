@@ -19,7 +19,7 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <html style={{height: "95%"}}>
+      <html>
         <Head>
         <link
           rel="stylesheet"
@@ -27,7 +27,7 @@ export default class MyDocument extends Document {
         />
           <style type="text/css" dangerouslySetInnerHTML={{__html: this.props.styleTags}} />
         </Head>
-        <body style={{backgroundColor: "#edebe9", height: "95%", display: "flex", alignItems: "center", justifyContent: "center"}}>
+        <body style={{backgroundColor: "#edebe9", display: "flex", alignItems: "center", justifyContent: "center"}}>
           <Main />
           <NextScript />
         </body>
