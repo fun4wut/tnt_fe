@@ -40,7 +40,15 @@ const ShipmentLocation = ({ histories }: Props) => {
   const router = useRouter()
   if (router.isFallback) {
     return (
-      <Spinner size={SpinnerSize.medium} label="Loading..." labelPosition="bottom" />
+      <Spinner
+        styles={{
+          circle: {width: 100, height: 100},
+          label: {fontSize: 20}
+        }}
+        size={SpinnerSize.large}
+        label="Loading..."
+        labelPosition="bottom"
+      />
     )
   }
 
