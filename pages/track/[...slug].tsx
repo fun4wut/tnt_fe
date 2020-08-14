@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { fetchFrom, getIconFromStatus } from '@lib/utils'
 import { ShipHistory } from '@lib/types'
 import { Carrier } from '@lib/constants'
-import { ActivityItem, Text, FontIcon, Label, Spinner, SpinnerSize, ShimmerElementsGroup, ShimmerElementType, Shimmer, AutoScroll, getIcon } from '@fluentui/react'
+import { ActivityItem, Text, Spinner, SpinnerSize,AutoScroll } from '@fluentui/react'
 import moment from 'moment'
 import { useRef, useEffect, CSSProperties } from 'react'
 
@@ -16,6 +16,7 @@ type Props = {
 const styles: Record<string, CSSProperties> = ({
   root: {
     // backgroundColor: "#edebe9"
+    // flex: 1
   },
   divideLine: {
     height: 0.5,

@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@fluentui/react": "^7.127.0",
-    "@uifabric/icons": "^7.3.72",
     "moment": "^2.27.0",
     "next": "9.5.2",
     "react": "16.13.1",
