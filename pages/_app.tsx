@@ -1,8 +1,6 @@
 // import App from "next/app";
 import type { AppProps /*, AppContext */ } from 'next/app'
-import {initializeIcons} from '@uifabric/icons'
 function MyApp({ Component, pageProps }: AppProps) {
-  initializeIcons()
   return <Component {...pageProps} />
 }
 
