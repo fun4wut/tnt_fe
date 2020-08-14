@@ -15,8 +15,9 @@ type Props = {
 
 const styles: Record<string, CSSProperties> = ({
   root: {
-    // backgroundColor: "#edebe9"
-    // flex: 1
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   divideLine: {
     height: 0.5,
@@ -39,7 +40,9 @@ const ShipmentLocation = ({ histories }: Props) => {
   const router = useRouter()
   if (router.isFallback) {
     return (
-      <Spinner size={SpinnerSize.medium} label="Loading..." labelPosition="bottom" />
+      <div style={styles.root}>
+        <Spinner size={SpinnerSize.medium} label="Loading..." labelPosition="bottom" />
+      </div>
     )
   }
 
@@ -68,7 +71,9 @@ const ShipmentLocation = ({ histories }: Props) => {
 
   return (
     <div style={styles.root} ref={rootRef}>
-      {histories.map(singleEvent)}
+      <div>
+        {histories.map(singleEvent)}
+      </div>
     </div>
   )
 
