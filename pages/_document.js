@@ -27,7 +27,7 @@ export default class MyDocument extends Document {
         />
           <style type="text/css" dangerouslySetInnerHTML={{__html: this.props.styleTags}} />
         </Head>
-        <body>
+        <body style={{backgroundColor: "#edebe9"}}>
           <Main />
           <NextScript />
         </body>

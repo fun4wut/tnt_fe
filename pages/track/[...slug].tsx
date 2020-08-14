@@ -15,7 +15,7 @@ type Props = {
 
 const styles: Record<string, CSSProperties> = ({
   root: {
-    backgroundColor: "#edebe9"
+    // backgroundColor: "#edebe9"
   },
   divideLine: {
     height: 0.5,
@@ -38,7 +38,7 @@ const ShipmentLocation = ({ histories }: Props) => {
   const router = useRouter()
   if (router.isFallback) {
     return (
-        <Text>Loading...</Text>
+      <Spinner size={SpinnerSize.medium} label="Loading..." labelPosition="bottom" />
     )
   }
 
