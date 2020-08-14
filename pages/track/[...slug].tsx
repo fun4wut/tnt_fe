@@ -6,7 +6,6 @@ import { Carrier } from '@lib/constants'
 import { ActivityItem, Text, FontIcon, Label, Spinner, SpinnerSize, ShimmerElementsGroup, ShimmerElementType, Shimmer, AutoScroll } from '@fluentui/react'
 import moment from 'moment'
 import { useRef, useEffect, CSSProperties } from 'react'
-import { initializeIcons } from '@uifabric/icons'
 
 type Props = {
   histories: Array<ShipHistory>
@@ -35,7 +34,6 @@ const styles: Record<string, CSSProperties> = ({
   }
 })
 
-initializeIcons()
 const ShipmentLocation = ({ histories }: Props) => {
   const router = useRouter()
   if (router.isFallback) {

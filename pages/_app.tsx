@@ -1,6 +1,9 @@
-import App from "next/app";
+// import App from "next/app";
 import type { AppProps, AppContext } from 'next/app'
+import { initializeIcons } from '@uifabric/icons'
+
 function MyApp({ Component, pageProps }: AppProps) {
+  initializeIcons()
   return <Component {...pageProps} />
 }
 
@@ -9,11 +12,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 // perform automatic static optimization, causing every page in your app to
 // be server-side rendered.
 //
-MyApp.getInitialProps = async (appContext: AppContext) => {
-  // calls page's `getInitialProps` and fills `appProps.pageProps`
-  const appProps = await App.getInitialProps(appContext);
+// MyApp.getInitialProps = async (appContext: AppContext) => {
+//   // calls page's `getInitialProps` and fills `appProps.pageProps`
+//   const appProps = await App.getInitialProps(appContext);
 
-  return { ...appProps }
-}
+//   return { ...appProps }
+// }
 
 export default MyApp
