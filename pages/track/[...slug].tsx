@@ -15,7 +15,7 @@ type Props = {
 
 const styles = mergeStyleSets({
   root: {
-    // backgroundColor: "gray"
+    backgroundColor: "white"
   },
   divideLine: {
     height: 0.5,
