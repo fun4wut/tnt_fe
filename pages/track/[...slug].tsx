@@ -42,8 +42,8 @@ const ShipmentLocation = ({ histories }: Props) => {
     return (
       <Spinner
         styles={{
-          circle: {width: 100, height: 100},
-          label: {fontSize: 20}
+          circle: {width: 70, height: 70},
+          label: {fontSize: 18}
         }}
         size={SpinnerSize.large}
         label="Loading..."
@@ -75,10 +75,14 @@ const ShipmentLocation = ({ histories }: Props) => {
     />
   )
 
+  const dom = histories.map(singleEvent)
+
   return (
     <div style={styles.root} ref={rootRef}>
-      <div>
-        {histories.map(singleEvent)}
+      <div style={{
+        transform: dom.length <= 1 ? "scale(1.5,1.5)" : "none"
+      }}>
+        {dom}
       </div>
     </div>
   )
