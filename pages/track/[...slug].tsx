@@ -98,10 +98,19 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug: [carrier, trackingNum] } = params
-
+  let histories
+  try {
+    histories = await fetchFrom(carrier as Carrier, trackingNum)
+  } catch (error) {
+    histories = [{
+      location: "Unknown",
+      status: "Invalid",
+      time: "-----"
+    }]
+  }
   return {
     props: {
-      histories: await fetchFrom(carrier as Carrier, trackingNum)
+      histories
     } as Props,
     revalidate: 1
   }
