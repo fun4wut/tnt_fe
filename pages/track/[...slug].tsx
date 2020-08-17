@@ -98,9 +98,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug: [carrier, trackingNum] } = params
-  let histories
+  let histories: ShipHistory[]
   try {
     histories = await fetchFrom(carrier as Carrier, trackingNum)
+    if (histories[0].status === '') {
+      throw new Error()
+    }
   } catch (error) {
     histories = [{
       location: "Unknown",
