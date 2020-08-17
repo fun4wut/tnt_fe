@@ -85,7 +85,7 @@ export function getIconFromStatus(status: string) {
 }
 
 export function fetchFrom(carrier: Carrier, trackingNum: string) {
-  switch (carrier) {
+  switch (carrier.toLowerCase()) {
     case "dhl":
       return fetchFromDHL(trackingNum)
     case "fedex":
