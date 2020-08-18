@@ -72,7 +72,7 @@ const ShipmentLocation = ({ histories }: Props) => {
   return (
     <div style={styles.root}>
       <div style={{
-        transform: dom.length <= 1 ? "scale(1.2,1.2)" : "none"
+        transform: dom.length <= 1 ? "scale(1.1,1.1)" : "none"
       }}>
         {dom}
       </div>
