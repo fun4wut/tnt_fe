@@ -15,7 +15,7 @@ function fetchFromDHL(trackingNum: string): Promise<ShipHistory[]> {
     .then(list => list.map(evt => ({
       location: evt.location,
       status: evt.description,
-      time: moment(`${evt.date} ${evt.time}`, "LLLL").toLocaleString()
+      time: moment(`${evt.date} ${evt.time}`, "LLLL").toISOString()
     } as ShipHistory)))
 }
 
@@ -40,7 +40,7 @@ function fetchFromFedex(trackingNum: string): Promise<ShipHistory[]> {
     .then(res => JSON.parse(res.text).TrackPackagesResponse.packageList[0].scanEventList)
     .then(list => list.map(evt => ({
       status: evt.status,
-      time: moment(`${evt.date} ${evt.time}`, "YYYY-MM-DD hh:mm:ss").toLocaleString(),
+      time: moment(`${evt.date} ${evt.time}`, "YYYY-MM-DD hh:mm:ss").toISOString(),
       location: evt.scanLocation
     } as ShipHistory)))
 }
@@ -61,7 +61,7 @@ function fetchFromUPS(trackingNum: string): Promise<ShipHistory[]> {
     .then(list => list.map(evt => ({
       status: evt.activityScan,
       location: evt.location,
-      time: moment(`${evt.date} ${evt.time}`, "DD/MM/YYYY LT").toLocaleString()
+      time: moment(`${evt.date} ${evt.time}`, "DD/MM/YYYY LT").toISOString()
     } as ShipHistory)))
 }
 

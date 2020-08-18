@@ -5,7 +5,7 @@ import { ShipHistory } from '@lib/types'
 import { Carrier } from '@lib/constants'
 import { ActivityItem, Text, Spinner, SpinnerSize,AutoScroll } from '@fluentui/react'
 import moment from 'moment'
-import { useRef, useEffect, CSSProperties } from 'react'
+import { CSSProperties } from 'react'
 
 type Props = {
   histories: Array<ShipHistory>
@@ -52,14 +52,6 @@ const ShipmentLocation = ({ histories }: Props) => {
     )
   }
 
-  const rootRef = useRef<HTMLDivElement>()
-  useEffect(() => {
-    const scroll = new AutoScroll(rootRef.current)
-    return () => {
-      scroll.dispose()
-    }
-  }, [])
-
   const singleEvent = (evt: ShipHistory) => (
     <ActivityItem
       key={evt.location}
@@ -78,7 +70,7 @@ const ShipmentLocation = ({ histories }: Props) => {
   const dom = histories.map(singleEvent)
 
   return (
-    <div style={styles.root} ref={rootRef}>
+    <div style={styles.root}>
       <div style={{
         transform: dom.length <= 1 ? "scale(1.5,1.5)" : "none"
       }}>
