@@ -11,7 +11,7 @@ function fetchFromDHL(trackingNum: string): Promise<ShipHistory[]> {
       Accept: "*/*",
       Connection: "keep-alive"
     })
-    .then(res => JSON.parse(JSON.parse(res.text)))
+    .then(res => JSON.parse(res.text))
     .then(res => res.results[0].checkpoints)
     .then(list => list.map(evt => ({
       location: evt.location,
