@@ -94,9 +94,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     histories = await fetchFrom(carrier as Carrier, trackingNum)
     if (histories[0].status === '') {
-      throw new Error()
+      throw new Error("status cannot be empty")
     }
   } catch (error) {
+    console.error(error)
     histories = [{
       location: "Unknown",
       status: "Invalid",
